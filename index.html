@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Desafio NTT</title>
+
+	<link href="css/bootstrap.mim.css" rel="stylesheet">
+	<link href="css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+					aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Desafio NTT</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">HOME</a></li>
+					<li><a href="#">OPTIONS</a></li>
+					<li><a href="#">CLIENT</a></li>
+					<li><a href="#">HELP</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div id="main" class="container-fluid" style="margin-top: 50px">
+
+		<div id="top" class="row">
+			<div class="col-sm-3">
+				<h2>Clientes</h2>
+			</div>
+			<div class="col-sm-6">
+
+				<div class="input-group h2">
+					<input name="data[search]" class="form-control" id="search" type="text"
+						placeholder="Pesquisar Itens">
+					<span class="input-group-btn">
+						<button class="btn btn-primary" id="send" type="submit">
+							<span class="glyphicons glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
+
+			</div>
+			<div class="col-sm-3">
+				<a href="add.html" class="btn btn-primary pull-right h2">Novo Cliente</a>
+
+				<a href="#" class="btnl btn-primary pull-right h2" style="text-decoration:none">Listar Clientes</a>
+			</div>''
+		</div> <!-- /#top -->
+
+
+		<hr />
+		<div id="list" class="row">
+
+			<div class="table-responsive col-md-12">
+				<div class="checkbox-elements"></div>
+				<div class="content-result">
+					<div class="header-result">
+						<div class="itens">ID</div>
+						<div class="itens">First Name</div>
+						<div class="itens">Last Name</div>
+						<div class="itens">Active</div>
+						<div class="itens">email</div>
+						<div class="itens">gender</div>
+						<div class="itens">skills</div>
+						<div class="itens">ip Address</div>
+						<div class="itens">company</div>
+						<div class="itens">Department</div>
+						<div class="itens">job Title</div>
+						<div class="itens">Employee Number</div>
+						<div class="itens">Avatar</div>
+						<div class="itens">Timezone</div>
+
+					</div>
+					<div id="bodyResult" class="body-result"></div>
+
+				</div>
+				<div class="btnc">
+					<a href="edit.html" button class="btnedit">Editar</a>
+					<a href="#" button class="btndel">Excluir</a>
+				</div>
+
+			</div>
+
+		</div> 
+
+	
+	</div> 
+	</div> 
+
+
+	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalLabel">Excluir Item</h4>
+				</div>
+				<div class="modal-body">
+					Deseja realmente excluir este item?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary">Sim</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script>
+
+		var urlDoServico = [
+			{
+				"id": 1,
+				"first_name": "Celestyna",
+				"last_name": "Stockhill",
+				"active": true,
+				"email": "cstockhill0@bluehost.com",
+				"gender": "Female",
+				"skills": "TDMoIP",
+				"ip_address": "82.203.240.233",
+				"company": "Oozz",
+				"department": "Training",
+				"job_title": "Financial Analyst",
+				"employee_number": "40-9043942",
+				"img_avatar": "https://robohash.org/nonarchitectoofficiis.bmp?size=50x50&set=set1",
+				"timezone": "Europe/Moscow",
+				"other_info": [
+					{}
+				]
+			},
+			{
+				"id": 2,
+				"first_name": "Tull",
+				"last_name": "Dabels",
+				"active": false,
+				"email": "tdabels1@skype.com",
+				"gender": "Male",
+				"skills": "Healthcare Industry",
+				"ip_address": "46.127.114.84",
+				"company": "Voolia",
+				"department": "Marketing",
+				"job_title": "Recruiting Manager",
+				"employee_number": "68-4628424",
+				"img_avatar": "https://robohash.org/voluptatemadipiscivel.bmp?size=50x50&set=set1",
+				"timezone": "Asia/Manila",
+				"other_info": [
+					{},
+					{},
+					{}
+				]
+			},
+			{
+				"id": 3,
+				"first_name": "Maxwell",
+				"last_name": "Laudham",
+				"active": true,
+				"email": "mlaudham2@diigo.com",
+				"gender": "Male",
+				"skills": "Sun One LDAP",
+				"ip_address": "159.204.57.19",
+				"company": "Dabvine",
+				"department": "Engineering",
+				"job_title": "VP Quality Control",
+				"employee_number": "88-2283694",
+				"img_avatar": "https://robohash.org/idutvero.png?size=50x50&set=set1",
+				"timezone": "Europe/Zaporozhye",
+				"other_info": [
+					{},
+					{}
+				]
+			},
+			{
+				"id": 4,
+				"first_name": "Ly",
+				"last_name": "Charnock",
+				"active": true,
+				"email": "lcharnock3@army.mil",
+				"gender": "Male",
+				"skills": "SWOT analysis",
+				"ip_address": "242.153.174.253",
+				"company": "Layo",
+				"department": "Services",
+				"job_title": "Registered Nurse",
+				"employee_number": "75-9183091",
+				"img_avatar": "https://robohash.org/doloremetquam.bmp?size=50x50&set=set1",
+				"timezone": "America/Argentina/Cordoba",
+				"other_info": [
+					{}
+				]
+			},
+			{
+				"id": 5,
+				"first_name": "Ginnifer",
+				"last_name": "Hargess",
+				"active": false,
+				"email": "ghargess4@google.co.uk",
+				"gender": "Female",
+				"skills": "TF-CBT",
+				"ip_address": "132.60.203.45",
+				"company": "Fliptune",
+				"department": "Support",
+				"job_title": "Developer I",
+				"employee_number": "51-2982144",
+				"img_avatar": "https://robohash.org/expeditaveleligendi.jpg?size=50x50&set=set1",
+				"timezone": "America/Guayaquil",
+				"other_info": [
+					{},
+					{}
+				]
+			},
+			{
+				"id": 6,
+				"first_name": "Andres",
+				"last_name": "Phippen",
+				"active": true,
+				"email": "aphippen5@ocn.ne.jp",
+				"gender": "Male",
+				"skills": "Knitwear",
+				"ip_address": "140.4.81.152",
+				"company": "Camido",
+				"department": "Training",
+				"job_title": "Design Engineer",
+				"employee_number": "80-8344432",
+				"img_avatar": "https://robohash.org/quianulladelectus.png?size=50x50&set=set1",
+				"timezone": "Europe/Lisbon",
+				"other_info": [
+					{},
+					{}
+				]
+			},
+			{
+				"id": 7,
+				"first_name": "Ambros",
+				"last_name": "Goodger",
+				"active": true,
+				"email": "agoodger6@seesaa.net",
+				"gender": "Male",
+				"skills": "Culture Change",
+				"ip_address": "90.94.74.171",
+				"company": "Avamm",
+				"department": "Sales",
+				"job_title": "Compensation Analyst",
+				"employee_number": "33-5860262",
+				"img_avatar": "https://robohash.org/isteexcepturiid.bmp?size=50x50&set=set1",
+				"timezone": "Asia/Chongqing",
+				"other_info": [
+					{},
+					{}
+				]
+			},
+			{
+				"id": 8,
+				"first_name": "Rip",
+				"last_name": "Tarbatt",
+				"active": true,
+				"email": "rtarbatt7@wikia.com",
+				"gender": "Male",
+				"skills": "EF",
+				"ip_address": "40.213.42.73",
+				"company": "Browsetype",
+				"department": "Engineering",
+				"job_title": "Project Manager",
+				"employee_number": "53-7736820",
+				"img_avatar": "https://robohash.org/velitquibusdamullam.bmp?size=50x50&set=set1",
+				"timezone": "Asia/Manila",
+				"other_info": [
+					{},
+					{}
+				]
+			},
+			{
+				"id": 9,
+				"first_name": "Tanitansy",
+				"last_name": "Cathesyed",
+				"active": false,
+				"email": "tcathesyed8@wisc.edu",
+				"gender": "Female",
+				"skills": "Shipbuilding",
+				"ip_address": "248.230.158.246",
+				"company": "Skilith",
+				"department": "Legal",
+				"job_title": "Product Engineer",
+				"employee_number": "43-2508979",
+				"img_avatar": "https://robohash.org/quasilaboriosamdolores.bmp?size=50x50&set=set1",
+				"timezone": "America/La_Paz",
+				"other_info": [
+					{},
+					{},
+					{}
+				]
+			},
+			{
+				"id": 10,
+				"first_name": "Broddie",
+				"last_name": "Cusiter",
+				"active": true,
+				"email": "bcusiter9@nsw.gov.au",
+				"gender": "Male",
+				"skills": "Vendor Relations",
+				"ip_address": "3.220.231.21",
+				"company": "Kamba",
+				"department": "Legal",
+				"job_title": "Software Engineer IV",
+				"employee_number": "93-5214465",
+				"img_avatar": "https://robohash.org/remperspiciatisnecessitatibus.bmp?size=50x50&set=set1",
+				"timezone": "Asia/Jakarta",
+				"other_info": [
+					{},
+					{},
+					{}
+				]
+			}
+		]
+		var result = 0;
+		var guardaResultado = [];
+
+		function listaResultado(result, val) {
+			$('#search').val('')
+			if (result == 1) {
+				$('#bodyResult').append(`<div class="content-itens">
+				<div class="itens">${val[0].id}</div>
+				<div class="itens">${val[0].first_name}</div>
+				<div class="itens">${val[0].last_name}</div>
+				<div class="itens">${val[0].active}</div>
+				<div class="itens">${val[0].email}</div>
+				<div class="itens">${val[0].gender}</div>
+				<div class="itens">${val[0].skills}</div>
+				<div class="itens">${val[0].ip_address}</div>
+				<div class="itens">${val[0].company}</div>
+				<div class="itens">${val[0].department}</div>
+				<div class="itens">${val[0].job_title}</div>
+				<div class="itens">${val[0].employee_number}</div>
+				<div class="itens"><img src="${val[0].img_avatar}" /></div>
+				<div class="itens">${val[0].timezone}</div>
+			</div>`)
+			} else {
+				$('#bodyResult').append('Nenhum resultado encontrado')
+			}
+		}
+
+		$('#send').click(function (event) {
+			event.preventDefault();
+			var textoDaBusca = $('#search').val();
+
+			if (textoDaBusca != '') {//verifica se está preenchido			
+				$('#bodyResult').empty();//limpa todos os resultados
+
+				urlDoServico.map(function (val, index) {
+					if (val.id == textoDaBusca) {
+						result = 1;
+						//console.log(val)
+						guardaResultado.push(val);
+						return false
+					}
+				});
+				//console.log(guardaResultado)
+				listaResultado(result, guardaResultado)
+			} else {
+				alert('preencha o campo');
+			}
+		});
+
+	</script>
+</body>
+
+</html>
